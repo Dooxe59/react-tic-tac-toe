@@ -9,11 +9,6 @@ class Board extends React.Component {
     this.state = {
       squares: Array(9).fill(null),
       xIsNext: Math.random() >= 0.5,
-      scores: {
-        xVictory: 0,
-        oVictory: 0,
-        draw: 0,
-      },
     };
   }
 
@@ -23,7 +18,6 @@ class Board extends React.Component {
 
     squares[i] = this.state.xIsNext ? "X" : "O";
     this.setState({
-      ...this.state,
       squares: squares,
       xIsNext: !this.state.xIsNext,
     });
@@ -33,20 +27,15 @@ class Board extends React.Component {
     this.setState({
       squares: Array(9).fill(null),
       xIsNext: Math.random() >= 0.5,
-      scores: {
-        xVictory: 0,
-        oVictory: 0,
-        draw: 0,
-      },
-    });
+		});
   }
 
-  updateScore(newScores) {
-    this.setState({
-      ...this.state,
-      scores: newScores,
-    });
-  }
+  // updateScore(newScores) {
+  //   this.setState({
+  //     // ...this.state,
+  //     scores: newScores,
+  //   });
+  // }
 
   renderSquare(i) {
     return (
@@ -61,22 +50,24 @@ class Board extends React.Component {
     const winner = calculateWinner(this.state.squares);
     let status;
 
-    const newScores = this.state.scores;
-
     if (winner) {
-      const newScores = this.state.scores;
-
       if (winner === "X") {
-        newScores.xVictory += 1;
-        this.updateScore(newScores);
+        this.props.addXVictory();
+
+        // newScores.xVictory += 1;
+        // this.updateScore(newScores);
       } else {
-        newScores.oVictory += 1;
-        this.updateScore(newScores);
+        this.props.addOVictory();
+
+        // newScores.oVictory += 1;
+        // this.updateScore(newScores);
       }
       status = `${winner} a gagné !`;
     } else if (isGameEnded(this.state.squares)) {
-      newScores.draw += 1;
-      this.updateScore(newScores);
+      this.props.addDraw();
+
+      // newScores.draw += 1;
+      // this.updateScore(newScores);
       status = `Partie terminée ! Match nul.`;
     } else {
       status = `Prochain joueur: ${this.state.xIsNext ? "X" : "O"}`;
@@ -84,17 +75,6 @@ class Board extends React.Component {
 
     return (
       <div>
-        <div className="score">
-          <div className="counter-x-victory">
-            Nombre de victoire de x: {this.state.scores.xVictory}
-          </div>
-          <div className="counter-o-victory">
-            Nombre de victoire de o: {this.state.scores.oVictory}
-          </div>
-          <div className="draw-counter">
-            Nombre de matches nul: {this.state.scores.draw}
-          </div>
-        </div>
         <div className="status">{status}</div>
         <div className="board-row">
           {this.renderSquare(0)}
