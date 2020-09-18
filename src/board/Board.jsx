@@ -9,6 +9,7 @@ class Board extends React.Component {
     this.state = {
       squares: Array(9).fill(null),
       xIsNext: Math.random() >= 0.5,
+      endedGame: false,
     };
   }
 
@@ -30,13 +31,6 @@ class Board extends React.Component {
 		});
   }
 
-  // updateScore(newScores) {
-  //   this.setState({
-  //     // ...this.state,
-  //     scores: newScores,
-  //   });
-  // }
-
   renderSquare(i) {
     return (
       <Square
@@ -47,28 +41,30 @@ class Board extends React.Component {
   }
 
   render() {
+    if(this.state.endedGame) {
+      return (
+        <div>Partie terminée !</div>
+      );
+    }
     const winner = calculateWinner(this.state.squares);
     let status;
 
     if (winner) {
       if (winner === "X") {
         this.props.addXVictory();
-
-        // newScores.xVictory += 1;
-        // this.updateScore(newScores);
       } else {
         this.props.addOVictory();
-
-        // newScores.oVictory += 1;
-        // this.updateScore(newScores);
       }
       status = `${winner} a gagné !`;
+      this.setState({
+        endedGame: true,
+      });
     } else if (isGameEnded(this.state.squares)) {
       this.props.addDraw();
-
-      // newScores.draw += 1;
-      // this.updateScore(newScores);
       status = `Partie terminée ! Match nul.`;
+      this.setState({
+        endedGame: true,
+      });
     } else {
       status = `Prochain joueur: ${this.state.xIsNext ? "X" : "O"}`;
     }

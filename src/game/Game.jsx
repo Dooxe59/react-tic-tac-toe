@@ -4,37 +4,34 @@ import './game.css';
 import Board from '../board/Board';
 
 class Game extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			scores: {
-				xVictory: 0,
-        oVictory: 0,
-        draw: 0,
-			}
+	state = {
+		scores: {
+			xVictory: 0,
+			oVictory: 0,
+			draw: 0,
 		}
 	}
 
-	addXVictory() {
-		this.setState((state) => {
+	addXVictory = () => {
+		this.setState(currentState => {
 			return {
-				xVictory: state.xVictory + 1,
+				xVictory: currentState.scores.xVictory + 1,
 			}
 		});
 	}
 
-	addOVictory() {
-		this.setState((state) => {
+	addOVictory = () => {
+		this.setState(currentState => {
 			return {
-				oVictory: state.oVictory + 1,
+				oVictory: currentState.scores.oVictory + 1,
 			}
 		});
 	}
 
-	addDraw() {
-		this.setState((state) => {
+	addDraw = () => {
+		this.setState(currentState => {
 			return {
-				draw: state.draw + 1,
+				draw: currentState.scores.draw + 1,
 			}
 		});
 	}
