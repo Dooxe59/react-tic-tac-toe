@@ -4,14 +4,10 @@ import "./board.css";
 import Square from "../square/Square";
 
 class Board extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      squares: Array(9).fill(null),
-      xIsNext: Math.random() >= 0.5,
-      endedGame: false,
-    };
-  }
+  state = {
+    squares: Array(9).fill(null),
+    xIsNext: Math.random() >= 0.5,
+  };
 
   handleClick(i) {
     const squares = this.state.squares.slice();
@@ -41,30 +37,21 @@ class Board extends React.Component {
   }
 
   render() {
-    if(this.state.endedGame) {
-      return (
-        <div>Partie terminée !</div>
-      );
-    }
     const winner = calculateWinner(this.state.squares);
-    let status;
+    let status = '';
 
     if (winner) {
       if (winner === "X") {
         this.props.addXVictory();
+        status = `X a gagné`;
       } else {
         this.props.addOVictory();
+        status = `O a gagné`;
       }
-      status = `${winner} a gagné !`;
-      this.setState({
-        endedGame: true,
-      });
     } else if (isGameEnded(this.state.squares)) {
       this.props.addDraw();
-      status = `Partie terminée ! Match nul.`;
-      this.setState({
-        endedGame: true,
-      });
+      status = `Match nul !`;
+
     } else {
       status = `Prochain joueur: ${this.state.xIsNext ? "X" : "O"}`;
     }
@@ -88,7 +75,7 @@ class Board extends React.Component {
           {this.renderSquare(8)}
         </div>
         <button className="resetButton" onClick={() => this.resetState()}>
-          Recommencer
+          Recommencer la partie
         </button>
       </div>
     );
