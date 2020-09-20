@@ -28,19 +28,22 @@ class Board extends React.Component {
 		});
   }
 
-  renderSquare(i, winnerSquare) {
+  renderSquare(i, squareState) {
     return (
       <Square
         value={this.state.squares[i]}
-        winnerSquare={winnerSquare}
+        squareState={squareState}
         onClick={() => this.handleClick(i)}
       />
     );
   }
 
-  isSquareInWinnerLine(squareIndex, winnerLine) {
+  getSquareState(squareIndex, winnerLine) {
     if(!winnerLine) return;
-    return winnerLine.includes(squareIndex);
+    if (winnerLine.includes(squareIndex)) {
+      return 'W';
+    }
+    return 'L';
   }
 
   render() {
@@ -69,19 +72,19 @@ class Board extends React.Component {
         <div className="status">{status}</div>
         <div className="board-rows">
           <div className="board-row">
-            {this.renderSquare(0, this.isSquareInWinnerLine(0, winnerLine))}
-            {this.renderSquare(1, this.isSquareInWinnerLine(1, winnerLine))}
-            {this.renderSquare(2, this.isSquareInWinnerLine(2, winnerLine))}
+            {this.renderSquare(0, this.getSquareState(0, winnerLine))}
+            {this.renderSquare(1, this.getSquareState(1, winnerLine))}
+            {this.renderSquare(2, this.getSquareState(2, winnerLine))}
           </div>
           <div className="board-row">
-            {this.renderSquare(3, this.isSquareInWinnerLine(3, winnerLine))}
-            {this.renderSquare(4, this.isSquareInWinnerLine(4, winnerLine))}
-            {this.renderSquare(5, this.isSquareInWinnerLine(5, winnerLine))}
+            {this.renderSquare(3, this.getSquareState(3, winnerLine))}
+            {this.renderSquare(4, this.getSquareState(4, winnerLine))}
+            {this.renderSquare(5, this.getSquareState(5, winnerLine))}
           </div>
           <div className="board-row">
-            {this.renderSquare(6, this.isSquareInWinnerLine(6, winnerLine))}
-            {this.renderSquare(7, this.isSquareInWinnerLine(7, winnerLine))}
-            {this.renderSquare(8, this.isSquareInWinnerLine(8, winnerLine))}
+            {this.renderSquare(6, this.getSquareState(6, winnerLine))}
+            {this.renderSquare(7, this.getSquareState(7, winnerLine))}
+            {this.renderSquare(8, this.getSquareState(8, winnerLine))}
           </div>
         </div>
         <button className="reset-button" onClick={() => this.resetState()}>

@@ -5,7 +5,7 @@ import './square.css';
 function Square(props) {
 	return (
 		<button 
-			className={`square ${squareClass(props.winnerSquare)}`}
+			className={`square ${squareClass(props.squareState)}`}
 			onClick={props.onClick}
 		>
 			{props.value}
@@ -13,9 +13,13 @@ function Square(props) {
 	);
 }
 
-const squareClass = (winnerSquare) => {
-	if(!winnerSquare) return;
-	return 'winner-square';
+const squareClass = (squareState) => {
+	if(squareState === 'W') {
+		return 'winner-square';
+	} else if(squareState === 'L') {
+		return 'looser-square';
+	}
+	return '';
 };
 
 export default Square;
