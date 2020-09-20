@@ -20,6 +20,9 @@ class Game extends React.Component {
 	render() {
 		return (
 			<div className="game">
+				<div className="game-name">
+					React Tic-Tac-Toe
+				</div>
 				<div className="game-board">
 					{/* <Score
 						addXVictory={this.addXVictory}
@@ -32,9 +35,9 @@ class Game extends React.Component {
 						addDraw={() => this.addDraw()}
 					/>
 				</div>
-				<div className="game-info">
-					<ol>{/* TODO */}</ol>
-				</div>
+				{/* <div className="game-info">
+					<ol>TODO</ol>
+				</div> */}
 			</div>
 		);
 	}
