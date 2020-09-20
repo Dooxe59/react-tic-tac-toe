@@ -11,7 +11,8 @@ class Board extends React.Component {
 
   handleClick(i) {
     const squares = this.state.squares.slice();
-    if (calculateWinner(squares) || squares[i]) return;
+    const winnerLine = calculateWinner(this.state.squares);
+    if (winnerLine || squares[i]) return;
 
     squares[i] = this.state.xIsNext ? "X" : "O";
     this.setState({
@@ -27,17 +28,24 @@ class Board extends React.Component {
 		});
   }
 
-  renderSquare(i) {
+  renderSquare(i, winnerSquare) {
     return (
       <Square
         value={this.state.squares[i]}
+        winnerSquare={winnerSquare}
         onClick={() => this.handleClick(i)}
       />
     );
   }
 
+  isSquareInWinnerLine(squareIndex, winnerLine) {
+    if(!winnerLine) return;
+    return winnerLine.includes(squareIndex);
+  }
+
   render() {
-    const winner = calculateWinner(this.state.squares);
+    const winnerLine = calculateWinner(this.state.squares);
+    const winner = winnerLine && winnerLine.length ? this.state.squares[winnerLine[0]] : null;
     let status = '';
 
     if (winner) {
@@ -61,19 +69,19 @@ class Board extends React.Component {
         <div className="status">{status}</div>
         <div className="board-rows">
           <div className="board-row">
-            {this.renderSquare(0)}
-            {this.renderSquare(1)}
-            {this.renderSquare(2)}
+            {this.renderSquare(0, this.isSquareInWinnerLine(0, winnerLine))}
+            {this.renderSquare(1, this.isSquareInWinnerLine(1, winnerLine))}
+            {this.renderSquare(2, this.isSquareInWinnerLine(2, winnerLine))}
           </div>
           <div className="board-row">
-            {this.renderSquare(3)}
-            {this.renderSquare(4)}
-            {this.renderSquare(5)}
+            {this.renderSquare(3, this.isSquareInWinnerLine(3, winnerLine))}
+            {this.renderSquare(4, this.isSquareInWinnerLine(4, winnerLine))}
+            {this.renderSquare(5, this.isSquareInWinnerLine(5, winnerLine))}
           </div>
           <div className="board-row">
-            {this.renderSquare(6)}
-            {this.renderSquare(7)}
-            {this.renderSquare(8)}
+            {this.renderSquare(6, this.isSquareInWinnerLine(6, winnerLine))}
+            {this.renderSquare(7, this.isSquareInWinnerLine(7, winnerLine))}
+            {this.renderSquare(8, this.isSquareInWinnerLine(8, winnerLine))}
           </div>
         </div>
         <button className="reset-button" onClick={() => this.resetState()}>
@@ -103,7 +111,7 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return lines[i];
     }
   }
   return null;

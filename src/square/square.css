@@ -15,6 +15,7 @@
   min-height: 50px;
   max-height: 250px;
   max-width: 250px;
+	transition: font-size 400ms;
 }
 
 @media screen and (max-width: 800px) {
@@ -33,4 +34,9 @@
 
 .square:focus {
   outline: none;
+}
+
+.winner-square {
+  color: lawngreen;
+  font-size: 15vh;
 }
