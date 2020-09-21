@@ -2,19 +2,31 @@ import React from 'react';
 
 import './game.css';
 import Board from '../board/Board';
-// import Score from '../score/Score';
+import Score from '../score/Score';
 
 class Game extends React.Component {
+  state = {
+    xVictory: 0,
+    oVictory: 0,
+    draw: 0,
+  };
+
 	addXVictory() {
-		console.log('X victory');
+    this.setState({
+      xVictory: this.state.xVictory + 1,
+    });
 	}
 
 	addOVictory() {
-		console.log('O victory');
+    this.setState({
+      oVictory: this.state.oVictory + 1,
+    });
 	}
 
 	addDraw() {
-		console.log('addDraw');
+    this.setState({
+      draw: this.state.draw + 1,
+    });
 	}
 
 	render() {
@@ -24,11 +36,11 @@ class Game extends React.Component {
 					React Tic-Tac-Toe
 				</div>
 				<div className="game-board">
-					{/* <Score
-						addXVictory={this.addXVictory}
-						addOVictory={this.addOVictory}
-						addDraw={this.addDraw}
-					/> */}
+					<Score
+						xVictory={this.state.xVictory}
+						oVictory={this.state.oVictory}
+						draw={this.state.draw}
+					/>
 					<Board
 						addXVictory={() => this.addXVictory()}
 						addOVictory={() => this.addOVictory()}

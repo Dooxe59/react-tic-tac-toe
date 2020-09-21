@@ -7,17 +7,37 @@ class Board extends React.Component {
   state = {
     squares: Array(9).fill(null),
     xIsNext: Math.random() >= 0.5,
+    isGameDone: false,
   };
 
   handleClick(i) {
+    if (this.state.isGameDone) return;
+
+    let isGameDone = false;
+
     const squares = this.state.squares.slice();
-    const winnerLine = calculateWinner(this.state.squares);
-    if (winnerLine || squares[i]) return;
+    let winnerLine = calculateWinner(this.state.squares);
 
     squares[i] = this.state.xIsNext ? "X" : "O";
+
+    winnerLine = calculateWinner(squares);
+    const winner = winnerLine && winnerLine.length ? squares[winnerLine[0]] : null;
+    if (winner) {
+      if (winner === "X") {
+        this.props.addXVictory();
+      } else {
+        this.props.addOVictory();
+      }
+      isGameDone = true;
+    } else if (isGameEnded(squares)) {
+      this.props.addDraw();
+      isGameDone = true;
+    }
+
     this.setState({
       squares: squares,
       xIsNext: !this.state.xIsNext,
+      isGameDone: isGameDone,
     });
   }
 
@@ -25,6 +45,7 @@ class Board extends React.Component {
     this.setState({
       squares: Array(9).fill(null),
       xIsNext: Math.random() >= 0.5,
+      isGameDone: false,
 		});
   }
 
@@ -38,58 +59,65 @@ class Board extends React.Component {
     );
   }
 
-  getSquareState(squareIndex, winnerLine) {
-    if(!winnerLine) return;
-    if (winnerLine.includes(squareIndex)) {
-      return 'W';
-    }
-    return 'L';
+  renderBoardRows(winnerLine) {
+    return (
+      <div className="board-rows">
+        <div className="board-row">
+          {this.renderSquare(0, getSquareState(0, winnerLine))}
+          {this.renderSquare(1, getSquareState(1, winnerLine))}
+          {this.renderSquare(2, getSquareState(2, winnerLine))}
+        </div>
+        <div className="board-row">
+          {this.renderSquare(3, getSquareState(3, winnerLine))}
+          {this.renderSquare(4, getSquareState(4, winnerLine))}
+          {this.renderSquare(5, getSquareState(5, winnerLine))}
+        </div>
+        <div className="board-row">
+          {this.renderSquare(6, getSquareState(6, winnerLine))}
+          {this.renderSquare(7, getSquareState(7, winnerLine))}
+          {this.renderSquare(8, getSquareState(8, winnerLine))}
+        </div>
+      </div>
+    );
   }
 
-  render() {
-    const winnerLine = calculateWinner(this.state.squares);
+  renderResetButton() {
+    return (
+      <button className="reset-button" onClick={() => this.resetState()}>
+        Recommencer la partie
+      </button>
+    );
+  }
+
+  renderGameStatus(winnerLine) {
     const winner = winnerLine && winnerLine.length ? this.state.squares[winnerLine[0]] : null;
+
     let status = '';
 
     if (winner) {
       if (winner === "X") {
-        this.props.addXVictory();
         status = `X a gagné`;
       } else {
-        this.props.addOVictory();
         status = `O a gagné`;
       }
     } else if (isGameEnded(this.state.squares)) {
-      this.props.addDraw();
       status = `Match nul !`;
-
     } else {
       status = `Prochain joueur: ${this.state.xIsNext ? "X" : "O"}`;
     }
+    return (
+      <div className="status">{status}</div>
+    );
+  }
 
+  render() {
+    const winnerLine = calculateWinner(this.state.squares);
+    
     return (
       <div className="board">
-        <div className="status">{status}</div>
-        <div className="board-rows">
-          <div className="board-row">
-            {this.renderSquare(0, this.getSquareState(0, winnerLine))}
-            {this.renderSquare(1, this.getSquareState(1, winnerLine))}
-            {this.renderSquare(2, this.getSquareState(2, winnerLine))}
-          </div>
-          <div className="board-row">
-            {this.renderSquare(3, this.getSquareState(3, winnerLine))}
-            {this.renderSquare(4, this.getSquareState(4, winnerLine))}
-            {this.renderSquare(5, this.getSquareState(5, winnerLine))}
-          </div>
-          <div className="board-row">
-            {this.renderSquare(6, this.getSquareState(6, winnerLine))}
-            {this.renderSquare(7, this.getSquareState(7, winnerLine))}
-            {this.renderSquare(8, this.getSquareState(8, winnerLine))}
-          </div>
-        </div>
-        <button className="reset-button" onClick={() => this.resetState()}>
-          Recommencer la partie
-        </button>
+        {this.renderGameStatus(winnerLine)}
+        {this.renderBoardRows(winnerLine)}
+        {this.renderResetButton()}
       </div>
     );
   }
@@ -118,6 +146,14 @@ function calculateWinner(squares) {
     }
   }
   return null;
+}
+
+function getSquareState(squareIndex, winnerLine) {
+  if(!winnerLine) return;
+  if (winnerLine.includes(squareIndex)) {
+    return 'W';
+  }
+  return 'L';
 }
 
 export default Board;
