@@ -1,4 +1,4 @@
-.reset-button {
+.next-game-button {
 	background: #292929;
 	color: #00DBFC;
 	font-size: 2.5vh;
@@ -8,14 +8,30 @@
 	margin: 10px 50px;
 }
 
-.reset-button:hover {
+.next-game-button:hover {
   filter: brightness(150%);
   cursor: pointer;
 }
 
-.reset-button:disabled {
+.next-game-button:disabled {
   cursor: default;
   filter: grayscale(1);
+}
+
+.reset-button {
+  background: #292929;
+	color: #00DBFC;
+	font-size: 1.5vh;
+	cursor: pointer;
+	padding: 0.4rem 0.5rem;
+	border-radius: 10rem;
+  width: 100px;
+  margin-top: 10px;
+}
+
+.reset-button:hover {
+  filter: brightness(150%);
+  cursor: pointer;
 }
 
 .status {
@@ -28,7 +44,8 @@
 
 .board {
 	display: flex;
-	flex-direction: column;
+  flex-direction: column;
+  align-items: center;
 	flex: 1;
 	/* height: 100%; */
 }

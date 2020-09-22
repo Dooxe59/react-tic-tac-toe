@@ -121,13 +121,13 @@ class Board extends React.Component {
     );
   }
 
-  renderResetButton() {
+  renderNextGameButton() {
     const buttonTitle = !this.state.isGameEnded
       ? 'Ce bouton est désactivé car la partie n\'est pas terminée' : '';
 
     return (
       <button 
-        className="reset-button" 
+        className="next-game-button" 
         disabled={!this.state.isGameEnded} 
         title={buttonTitle}
         onClick={() => this.resetState()}
@@ -135,6 +135,22 @@ class Board extends React.Component {
         Partie suivante
       </button>
     );
+  }
+
+  renderResetButton() {
+    return (
+      <button 
+        className="reset-button" 
+        onClick={() => this.resetGame()}
+      >
+        Recommencer
+      </button>
+    );
+  }
+
+  resetGame() {
+    this.props.resetGame();
+    this.resetState();
   }
 
   renderGameStatus() {
@@ -158,9 +174,10 @@ class Board extends React.Component {
   render() {
     return (
       <div className="board">
+        {this.renderResetButton()}
         {this.renderGameStatus()}
         {this.renderBoardRows()}
-        {this.renderResetButton()}
+        {this.renderNextGameButton()}
       </div>
     );
   }

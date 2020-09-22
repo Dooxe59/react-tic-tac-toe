@@ -27,7 +27,15 @@ class Game extends React.Component {
     this.setState({
       draw: this.state.draw + 1,
     });
-	}
+  }
+  
+  resetGame() {
+    this.setState({
+      xVictory: 0,
+      oVictory: 0,
+      draw: 0,
+    });
+  }
 
 	render() {
 		return (
@@ -45,6 +53,7 @@ class Game extends React.Component {
 						addXVictory={() => this.addXVictory()}
 						addOVictory={() => this.addOVictory()}
 						addDraw={() => this.addDraw()}
+            resetGame={() => this.resetGame()}
 					/>
 				</div>
 				{/* <div className="game-info">
