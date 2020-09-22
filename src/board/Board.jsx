@@ -138,11 +138,10 @@ class Board extends React.Component {
   }
 
   renderGameStatus() {
-    const winner = this.state.gameResult;
+    const winner = this.state.winner;
     const isGameEnded = this.state.isGameEnded;
 
     let status = '';
-
     if (winner) {
       status = `${winner} a gagné`;
     } else if (isGameEnded) {
