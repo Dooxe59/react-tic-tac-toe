@@ -7,6 +7,7 @@ function Square(props) {
 		<button 
 			className={`square ${squareClass(props.squareState)}`}
 			onClick={props.onClick}
+      aria-label="Bouton représentant une case du jeu"
 		>
 			{props.value}
 		</button>
