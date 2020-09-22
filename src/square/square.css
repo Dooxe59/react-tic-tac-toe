@@ -25,27 +25,6 @@
   }
 }
 
-/* @media screen and (max-height: 1200px) {
-  .square {
-    width: 150px;
-    height: 150px;
-  }
-} */
-
-/* @media screen and (min-width: 1200px) and (max-width: 800px) {
-  .square {
-    width: 100px;
-    height: 100px;
-  }
-} */
-
-/* @media screen and (max-height: 1200px)  and (min-height: 800px) {
-  .square {
-    width: 100px;
-    height: 100px;
-  }
-} */
-
 .square:focus {
   outline: none;
 }
