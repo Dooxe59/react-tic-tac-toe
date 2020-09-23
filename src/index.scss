@@ -7,23 +7,7 @@ body {
   font: 14px "Century Gothic", Futura, sans-serif;
 }
   
-ol, ul {
-  padding-left: 30px;
-}
-  
 #root {
   height: 100%;
   width: 100%;
 }
-
-
-  .board-row:after {
-    clear: both;
-    content: "";
-    display: table;
-  }
-
-  .kbd-navigation .square:focus {
-    background: #ddd;
-  }
-  
