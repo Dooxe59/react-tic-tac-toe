@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./board.css";
+import "./board.scss";
 import Square from "../square/Square";
 
 class Board extends React.Component {

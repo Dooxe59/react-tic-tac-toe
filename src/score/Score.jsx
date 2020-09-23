@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './score.css';
+import './score.scss';
 
 class Score extends React.Component {
 	render() {

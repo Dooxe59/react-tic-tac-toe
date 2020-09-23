@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './game.css';
+import './game.scss';
 import Board from '../board/Board';
 import Score from '../score/Score';
 
