@@ -1,10 +1,15 @@
+@import '../../variables.scss'; 
+
+$winner-square-color: lawngreen;
+$looser-square-color:  #00dbfc75;
+
 .square {
   float: left;
   font-size: 10vh;
   font-weight: bold;
   text-align: center;
-  background: #292929;
-  color:#00DBFC;
+  background: $color-mine-shaft;
+  color: $color-cyan;
   display: flex;
   width: 200px;
   height: 200px;
@@ -30,11 +35,11 @@
 }
 
 .winner-square {
-  color: lawngreen;
+  color: $winner-square-color;
   font-size: 15vh;
 }
 
 .looser-square {
-  color: #00dbfc75;
+  color: $looser-square-color;
   font-size: 5vh;
 }

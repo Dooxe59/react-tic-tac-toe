@@ -1,3 +1,5 @@
+@import '../../variables.scss'; 
+
 .board {
 	display: flex;
   flex-direction: column;
@@ -5,13 +7,13 @@
   flex: 1;
   
   .reset-button {
-    background: #292929;
-    color: #00DBFC;
+    background-color: $color-mine-shaft;
+    color: $color-cyan;
     font-size: 1.5vh;
     cursor: pointer;
     padding: 0.4rem 0.5rem;
     border-radius: 10rem;
-    margin-top: 10px;
+    margin-top: $spacing;
 
     &:hover {
       filter: brightness(150%);
@@ -20,7 +22,7 @@
   }
 
   .status {
-    margin-top: 10px;
+    margin-top: $spacing;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,13 +50,13 @@
   }
 
   .next-game-button {
-    background: #292929;
-    color: #00DBFC;
+    background: $color-mine-shaft;
+    color: $color-cyan;
     font-size: 2.5vh;
     cursor: pointer;
     padding: 0.9rem 1.5rem;
     border-radius: 10rem;
-    margin: 10px 50px;
+    margin: $spacing 50px;
 
     &:hover {
       filter: brightness(150%);
