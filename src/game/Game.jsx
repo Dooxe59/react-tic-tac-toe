@@ -41,7 +41,7 @@ class Game extends React.Component {
 		return (
 			<div className="game">
 				<div className="game-name">
-					React Tic-Tac-Toe
+					Tic-Tac-Toe
 				</div>
 				<div className="game-board">
 					<Score
