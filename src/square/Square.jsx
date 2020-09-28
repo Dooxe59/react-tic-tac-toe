@@ -17,7 +17,7 @@ function Square(props) {
 const squareClass = (squareState) => {
 	if (squareState === 'W') {
 		return 'winner-square';
-	} else if(squareState === 'L') {
+	} else if (squareState === 'L') {
 		return 'looser-square';
 	}
 	return '';
