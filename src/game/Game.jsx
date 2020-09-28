@@ -56,9 +56,6 @@ class Game extends React.Component {
             resetGame={() => this.resetGame()}
 					/>
 				</div>
-				{/* <div className="game-info">
-					<ol>TODO</ol>
-				</div> */}
 			</div>
 		);
 	}
