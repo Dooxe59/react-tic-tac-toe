@@ -2,14 +2,14 @@ import React from 'react';
 
 import './square.scss';
 
-function Square(props) {
+function Square({squareState, value, onClick}) {
 	return (
 		<button 
-			className={`square ${squareClass(props.squareState)}`}
-			onClick={props.onClick}
+			className={`square ${squareClass(squareState)}`}
+			onClick={onClick}
       aria-label="Bouton représentant une case du jeu"
 		>
-			{props.value}
+			{value}
 		</button>
 	);
 }
