@@ -1,41 +1,29 @@
-import React from 'react';
+import PropTypes from "prop-types";
+import React from "react";
 
-import './score.scss';
+import "./score.scss";
 
-class Score extends React.Component {
-	render() {
-		return (
-			<div className="score">
-        <div className="counter-x-victory">
-          <div className="first-player-label">
-            Joueur 1 (X)
-          </div>
-          <div className="first-player-score">
-            {this.props.xVictory}
-          </div>
-        </div>
-        <div className="draw-counter">
-          <div className="draw-label">
-            Nul
-          </div>
-          <div className="draw-score">
-            {this.props.draw}
-          </div>
-        </div>
-        <div className="counter-o-victory">
-          <div className="second-player-score">
-            {this.props.oVictory}
-          </div>
-          <div className="second-player-label">
-            Joueur 2 (O)
-          </div>
-        </div>
-		  </div>
-		);
-	}
-	
-}
+const Score = ({ xVictory, draw, oVictory }) => (
+  <div className="score">
+    <div className="counter-x-victory">
+      <div className="first-player-label">Joueur 1 (X)</div>
+      <div className="first-player-score">{xVictory}</div>
+    </div>
+    <div className="draw-counter">
+      <div className="draw-label">Nul</div>
+      <div className="draw-score">{draw}</div>
+    </div>
+    <div className="counter-o-victory">
+      <div className="second-player-score">{oVictory}</div>
+      <div className="second-player-label">Joueur 2 (O)</div>
+    </div>
+  </div>
+);
+
+Score.propTypes = {
+  xVictory: PropTypes.number.isRequired,
+  draw: PropTypes.number.isRequired,
+  oVictory: PropTypes.number.isRequired,
+};
 
 export default Score;
-
-

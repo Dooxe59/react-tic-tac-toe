@@ -1,7 +1,7 @@
-@import '../../variables.scss'; 
+@import "../variables.scss";
 
 $winner-square-color: lawngreen;
-$looser-square-color:  #00dbfc75;
+$looser-square-color: #00dbfc75;
 
 .square {
   float: left;
@@ -20,7 +20,7 @@ $looser-square-color:  #00dbfc75;
   min-height: 50px;
   max-height: 250px;
   max-width: 250px;
-	transition: font-size 400ms;
+  transition: font-size 400ms;
 }
 
 @media screen and (max-width: 800px), screen and (max-height: 800px) {

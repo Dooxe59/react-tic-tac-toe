@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 
 import "./board.scss";
@@ -27,10 +28,14 @@ class Board extends React.Component {
       [0, 4, 8],
       [2, 4, 6],
     ];
-  
+
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
-      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      if (
+        squares[a] &&
+        squares[a] === squares[b] &&
+        squares[a] === squares[c]
+      ) {
         return lines[i];
       }
     }
@@ -41,14 +46,15 @@ class Board extends React.Component {
     const squares = this.state.squares.slice();
 
     if (this.state.isGameEnded || squares[i]) return;
-    
+
     squares[i] = this.state.xIsNext ? "X" : "O";
-    
+
     let isGameEnded = false;
 
     let winnerLine = this.calculateWinner(squares);
 
-    const winner = winnerLine && winnerLine.length ? squares[winnerLine[0]] : null;
+    const winner =
+      winnerLine && winnerLine.length ? squares[winnerLine[0]] : null;
     if (winner) {
       if (winner === "X") {
         this.props.addXVictory();
@@ -77,17 +83,17 @@ class Board extends React.Component {
       isGameEnded: false,
       winner: null,
       winnerLine: null,
-		});
+    });
   }
 
   getSquareState(squareIndex) {
     const winnerLine = this.state.winnerLine;
 
-    if(!winnerLine) return;
+    if (!winnerLine) return;
     if (winnerLine.includes(squareIndex)) {
-      return 'W';
+      return "W";
     }
-    return 'L';
+    return "L";
   }
 
   renderSquare(i, squareState) {
@@ -124,12 +130,13 @@ class Board extends React.Component {
 
   renderNextGameButton() {
     const buttonTitle = !this.state.isGameEnded
-      ? 'Ce bouton est désactivé car la partie n\'est pas terminée' : '';
+      ? "Ce bouton est désactivé car la partie n'est pas terminée"
+      : "";
 
     return (
-      <button 
-        className="next-game-button" 
-        disabled={!this.state.isGameEnded} 
+      <button
+        className="next-game-button"
+        disabled={!this.state.isGameEnded}
         title={buttonTitle}
         onClick={() => this.resetState()}
       >
@@ -140,10 +147,7 @@ class Board extends React.Component {
 
   renderResetButton() {
     return (
-      <button 
-        className="reset-button" 
-        onClick={() => this.resetGame()}
-      >
+      <button className="reset-button" onClick={() => this.resetGame()}>
         Recommencer
       </button>
     );
@@ -158,7 +162,7 @@ class Board extends React.Component {
     const winner = this.state.winner;
     const isGameEnded = this.state.isGameEnded;
 
-    let status = '';
+    let status = "";
     if (winner) {
       status = `${winner} a gagné`;
     } else if (isGameEnded) {
@@ -167,9 +171,7 @@ class Board extends React.Component {
       const nextPlayer = this.state.xIsNext ? "X" : "O";
       status = `Prochain joueur: ${nextPlayer}`;
     }
-    return (
-      <div className="status">{status}</div>
-    );
+    return <div className="status">{status}</div>;
   }
 
   render() {
@@ -183,5 +185,12 @@ class Board extends React.Component {
     );
   }
 }
+
+Board.propTypes = {
+  addXVictory: PropTypes.func.isRequired,
+  addOVictory: PropTypes.func.isRequired,
+  addDraw: PropTypes.func.isRequired,
+  resetGame: PropTypes.func.isRequired,
+};
 
 export default Board;

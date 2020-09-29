@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import './game.scss';
-import Board from '../board/Board';
-import Score from '../score/Score';
+import "./game.scss";
+import Board from "../board/Board";
+import Score from "../score/Score";
 
 class Game extends React.Component {
   state = {
@@ -11,24 +11,24 @@ class Game extends React.Component {
     draw: 0,
   };
 
-	addXVictory() {
+  addXVictory() {
     this.setState({
       xVictory: this.state.xVictory + 1,
     });
-	}
+  }
 
-	addOVictory() {
+  addOVictory() {
     this.setState({
       oVictory: this.state.oVictory + 1,
     });
-	}
+  }
 
-	addDraw() {
+  addDraw() {
     this.setState({
       draw: this.state.draw + 1,
     });
   }
-  
+
   resetGame() {
     this.setState({
       xVictory: 0,
@@ -37,29 +37,26 @@ class Game extends React.Component {
     });
   }
 
-	render() {
-		return (
-			<div className="game">
-				<div className="game-name">
-					React Tic-Tac-Toe
-				</div>
-				<div className="game-board">
-					<Score
-						xVictory={this.state.xVictory}
-						oVictory={this.state.oVictory}
-						draw={this.state.draw}
-					/>
-					<Board
-						addXVictory={() => this.addXVictory()}
-						addOVictory={() => this.addOVictory()}
-						addDraw={() => this.addDraw()}
+  render() {
+    return (
+      <div className="game">
+        <div className="game-name">React Tic-Tac-Toe</div>
+        <div className="game-board">
+          <Score
+            xVictory={this.state.xVictory}
+            oVictory={this.state.oVictory}
+            draw={this.state.draw}
+          />
+          <Board
+            addXVictory={() => this.addXVictory()}
+            addOVictory={() => this.addOVictory()}
+            addDraw={() => this.addDraw()}
             resetGame={() => this.resetGame()}
-					/>
-				</div>
-			</div>
-		);
-	}
-	
+          />
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Game;

@@ -1,4 +1,4 @@
-@import '../../variables.scss'; 
+@import "../variables.scss";
 
 $first-player-counter-color: aquamarine;
 $second-player-counter-color: pink;
@@ -54,11 +54,11 @@ $second-player-counter-color: pink;
     }
   }
 
-  @media screen and (max-width: 600px)  {
+  @media screen and (max-width: 600px) {
     .counter-x-victory {
       width: 120px;
     }
-  
+
     .counter-o-victory {
       width: 120px;
     }
