@@ -38,12 +38,13 @@ class Board extends React.Component {
   }
 
   handleClick(i) {
-    if (this.state.isGameEnded) return;
-
-    let isGameEnded = false;
-
     const squares = this.state.squares.slice();
+
+    if (this.state.isGameEnded || squares[i]) return;
+    
     squares[i] = this.state.xIsNext ? "X" : "O";
+    
+    let isGameEnded = false;
 
     let winnerLine = this.calculateWinner(squares);
 
