@@ -1,23 +1,17 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 
 import "./board.scss";
 import Square from "../square/Square";
 
-class Board extends React.Component {
-  state = {
-    squares: Array(9).fill(null),
-    xIsNext: Math.random() >= 0.5,
-    isGameEnded: false,
-    winner: null,
-    winnerLine: null,
-  };
+const Board = ({ addXVictory, addOVictory, addDraw, resetGame }) => {
+  const [squares, setSquares] = useState(Array(9).fill(null));
+  const [xIsNext, setXIsnext] = useState(Math.random() >= 0.5);
+  const [isGameEnded, setIsGameEnded] = useState(false);
+  const [winner, setWinner] = useState(null);
+  const [winnerLine, setWinnerLine] = useState(null);
 
-  isGameEnded(squares) {
-    return !squares.some((elem) => elem === null);
-  }
-
-  calculateWinner(squares) {
+  const calculateWinner = (squares) => {
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -40,151 +34,142 @@ class Board extends React.Component {
       }
     }
     return null;
-  }
+  };
 
-  handleClick(i) {
-    const squares = this.state.squares.slice();
+  const handleClick = (i) => {
+    if (isGameEnded || squares[i]) return;
 
-    if (this.state.isGameEnded || squares[i]) return;
+    squares[i] = xIsNext ? "X" : "O";
 
-    squares[i] = this.state.xIsNext ? "X" : "O";
+    let isGameEndedNewValue = false;
 
-    let isGameEnded = false;
+    let winnerLine = calculateWinner(squares);
 
-    let winnerLine = this.calculateWinner(squares);
+    const gameEnded = (squares) => {
+      return !squares.some((elem) => elem === null);
+    };
 
     const winner =
       winnerLine && winnerLine.length ? squares[winnerLine[0]] : null;
     if (winner) {
       if (winner === "X") {
-        this.props.addXVictory();
+        addXVictory();
       } else {
-        this.props.addOVictory();
+        addOVictory();
       }
-      isGameEnded = true;
-    } else if (this.isGameEnded(squares)) {
-      this.props.addDraw();
-      isGameEnded = true;
+      isGameEndedNewValue = true;
+    } else if (gameEnded(squares)) {
+      addDraw();
+      isGameEndedNewValue = true;
     }
 
-    this.setState({
-      squares: squares,
-      xIsNext: !this.state.xIsNext,
-      isGameEnded: isGameEnded,
-      winner: winner,
-      winnerLine: winnerLine,
-    });
-  }
+    setSquares(squares);
+    setXIsnext(!xIsNext);
+    setIsGameEnded(isGameEndedNewValue);
+    setWinner(winner);
+    setWinnerLine(winnerLine);
+  };
 
-  resetState() {
-    this.setState({
-      squares: Array(9).fill(null),
-      xIsNext: Math.random() >= 0.5,
-      isGameEnded: false,
-      winner: null,
-      winnerLine: null,
-    });
-  }
+  const resetState = () => {
+    setSquares(Array(9).fill(null));
+    setXIsnext(Math.random() >= 0.5);
+    setIsGameEnded(false);
+    setWinner(null);
+    setWinnerLine(null);
+  };
 
-  getSquareState(squareIndex) {
-    const winnerLine = this.state.winnerLine;
-
+  const getSquareState = (squareIndex) => {
     if (!winnerLine) return;
     if (winnerLine.includes(squareIndex)) {
       return "W";
     }
     return "L";
-  }
+  };
 
-  renderSquare(i, squareState) {
+  const renderSquare = (i) => {
     return (
       <Square
-        value={this.state.squares[i]}
-        squareState={this.getSquareState(i)}
-        onClick={() => this.handleClick(i)}
+        value={squares[i]}
+        squareState={getSquareState(i)}
+        onClick={() => handleClick(i)}
       />
     );
-  }
+  };
 
-  renderBoardRows() {
+  const renderBoardRows = () => {
     return (
       <div className="board-rows">
         <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
+          {renderSquare(0)}
+          {renderSquare(1)}
+          {renderSquare(2)}
         </div>
         <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
+          {renderSquare(3)}
+          {renderSquare(4)}
+          {renderSquare(5)}
         </div>
         <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
+          {renderSquare(6)}
+          {renderSquare(7)}
+          {renderSquare(8)}
         </div>
       </div>
     );
-  }
+  };
 
-  renderNextGameButton() {
-    const buttonTitle = !this.state.isGameEnded
+  const renderNextGameButton = () => {
+    const buttonTitle = !isGameEnded
       ? "Ce bouton est désactivé car la partie n'est pas terminée"
       : "";
 
     return (
       <button
         className="next-game-button"
-        disabled={!this.state.isGameEnded}
+        disabled={!isGameEnded}
         title={buttonTitle}
-        onClick={() => this.resetState()}
+        onClick={() => resetState()}
       >
         Partie suivante
       </button>
     );
-  }
+  };
 
-  renderResetButton() {
+  const renderResetButton = () => {
     return (
-      <button className="reset-button" onClick={() => this.resetGame()}>
+      <button className="reset-button" onClick={() => restartGame()}>
         Recommencer
       </button>
     );
-  }
+  };
 
-  resetGame() {
-    this.props.resetGame();
-    this.resetState();
-  }
+  const restartGame = () => {
+    resetGame();
+    resetState();
+  };
 
-  renderGameStatus() {
-    const winner = this.state.winner;
-    const isGameEnded = this.state.isGameEnded;
-
+  const renderGameStatus = () => {
     let status = "";
     if (winner) {
       status = `${winner} a gagné`;
     } else if (isGameEnded) {
       status = `Match nul !`;
     } else {
-      const nextPlayer = this.state.xIsNext ? "X" : "O";
+      const nextPlayer = xIsNext ? "X" : "O";
       status = `Prochain joueur: ${nextPlayer}`;
     }
     return <div className="status">{status}</div>;
-  }
+  };
 
-  render() {
-    return (
-      <div className="board">
-        {this.renderResetButton()}
-        {this.renderGameStatus()}
-        {this.renderBoardRows()}
-        {this.renderNextGameButton()}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="board">
+      {renderResetButton()}
+      {renderGameStatus()}
+      {renderBoardRows()}
+      {renderNextGameButton()}
+    </div>
+  );
+};
 
 Board.propTypes = {
   addXVictory: PropTypes.func.isRequired,

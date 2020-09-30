@@ -4,7 +4,16 @@ import React from "react";
 
 import "./square.scss";
 
-function Square({ squareState, value, onClick }) {
+const Square = ({ squareState, value, onClick }) => {
+  const squareClass = (squareState) => {
+    if (squareState === "W") {
+      return "winner-square";
+    } else if (squareState === "L") {
+      return "looser-square";
+    }
+    return "";
+  };
+
   return (
     <button
       className={`square ${squareClass(squareState)}`}
@@ -14,15 +23,6 @@ function Square({ squareState, value, onClick }) {
       {value}
     </button>
   );
-}
-
-const squareClass = (squareState) => {
-  if (squareState === "W") {
-    return "winner-square";
-  } else if (squareState === "L") {
-    return "looser-square";
-  }
-  return "";
 };
 
 Square.propTypes = {
