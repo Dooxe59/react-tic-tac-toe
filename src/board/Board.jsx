@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./board.scss";
 import Square from "../square/Square";
@@ -10,6 +10,10 @@ const Board = ({ addXVictory, addOVictory, addDraw, resetGame }) => {
   const [isGameEnded, setIsGameEnded] = useState(false);
   const [winner, setWinner] = useState(null);
   const [winnerLine, setWinnerLine] = useState(null);
+
+  useEffect(() => {
+    document.title = renderGameStatus()?.props?.children;
+  });
 
   const calculateWinner = (squares) => {
     const lines = [
