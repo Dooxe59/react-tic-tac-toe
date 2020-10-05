@@ -6,12 +6,13 @@ import Square from "../square/Square";
 
 const Board = ({ addXVictory, addOVictory, addDraw, resetGame }) => {
   const [squares, setSquares] = useState(Array(9).fill(null));
-  const [xIsNext, setXIsnext] = useState(Math.random() >= 0.5);
+  const [xIsNext, setXIsNext] = useState(Math.random() >= 0.5);
   const [isGameEnded, setIsGameEnded] = useState(false);
   const [winner, setWinner] = useState(null);
   const [winnerLine, setWinnerLine] = useState(null);
 
   useEffect(() => {
+    // TODO: HS
     document.title = renderGameStatus()?.props?.children;
   });
 
@@ -68,7 +69,7 @@ const Board = ({ addXVictory, addOVictory, addDraw, resetGame }) => {
     }
 
     setSquares(squares);
-    setXIsnext(!xIsNext);
+    setXIsNext(!xIsNext);
     setIsGameEnded(isGameEndedNewValue);
     setWinner(winner);
     setWinnerLine(winnerLine);
@@ -76,7 +77,7 @@ const Board = ({ addXVictory, addOVictory, addDraw, resetGame }) => {
 
   const resetState = () => {
     setSquares(Array(9).fill(null));
-    setXIsnext(Math.random() >= 0.5);
+    setXIsNext(Math.random() >= 0.5);
     setIsGameEnded(false);
     setWinner(null);
     setWinnerLine(null);
@@ -94,6 +95,7 @@ const Board = ({ addXVictory, addOVictory, addDraw, resetGame }) => {
     return (
       <Square
         value={squares[i]}
+        dataTestId={`square${i}`}
         squareState={getSquareState(i)}
         onClick={() => handleClick(i)}
       />
@@ -164,9 +166,14 @@ const Board = ({ addXVictory, addOVictory, addDraw, resetGame }) => {
       status = `Match nul !`;
     } else {
       const nextPlayer = xIsNext ? "X" : "O";
-      status = `Prochain joueur: ${nextPlayer}`;
+      return (
+        <div className="status">
+          Prochain joueur:
+          <span data-testid="next-player-value">{nextPlayer}</span>
+        </div>
+      );
     }
-    return <div className="status">{status}</div>;
+    return status;
   };
 
   return (

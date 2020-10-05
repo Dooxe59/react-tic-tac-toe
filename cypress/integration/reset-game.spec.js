@@ -4,16 +4,10 @@ context("Reset game", () => {
   });
 
   it("Reset game success", () => {
-    // cy.getByTestId("reset-game-button").click();
-    cy.get("[data-testid=reset-game-button]");
+    cy.findByTestId("reset-game-button").click();
 
-    // cy.getByTestId("first-player-score").contains("0");
-    cy.get("[data-testid=first-player-score]").contains("0");
-
-    // cy.getByTestId("draw-score").contains("0");
-    cy.get("[data-testid=draw-score]").contains("0");
-
-    cy.get("[data-testid=second-player-score]").contains("0");
-    // cy.getByTestId("second-player-score").contains("0");
+    cy.findByTestId("first-player-score").contains("0");
+    cy.findByTestId("draw-score").contains("0");
+    cy.findByTestId("second-player-score").contains("0");
   });
 });

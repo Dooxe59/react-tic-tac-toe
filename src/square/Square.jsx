@@ -4,21 +4,22 @@ import React from "react";
 
 import "./square.scss";
 
-const Square = ({ squareState, value, onClick }) => {
+const Square = ({ squareState, value, onClick, dataTestId }) => {
   const squareClass = (squareState) => {
     if (squareState === "W") {
-      return "winner-square";
+      return " winner-square";
     } else if (squareState === "L") {
-      return "looser-square";
+      return " looser-square";
     }
     return "";
   };
 
   return (
     <button
-      className={`square ${squareClass(squareState)}`}
+      className={`square${squareClass(squareState)}`}
       onClick={onClick}
       aria-label="Bouton représentant une case du jeu"
+      data-testid={dataTestId}
     >
       {value}
     </button>
