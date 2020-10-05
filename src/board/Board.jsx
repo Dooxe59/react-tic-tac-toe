@@ -141,7 +141,11 @@ const Board = ({ addXVictory, addOVictory, addDraw, resetGame }) => {
 
   const renderResetButton = () => {
     return (
-      <button className="reset-button" onClick={() => restartGame()}>
+      <button
+        data-testid="reset-game-button"
+        className="reset-button"
+        onClick={() => restartGame()}
+      >
         Recommencer
       </button>
     );
